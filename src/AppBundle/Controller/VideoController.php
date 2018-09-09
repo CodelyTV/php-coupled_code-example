@@ -2,14 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * THE VIDEO CONTROLLER
  * © CodelyTV 2017
  */
-final class VideoController extends FOSRestController
+class VideoController extends BaseController
 {
     /**
      * Method used to create a new video

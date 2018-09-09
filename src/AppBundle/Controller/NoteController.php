@@ -7,7 +7,6 @@ use AppBundle\Model\Note;
 use AppBundle\Model\NoteCollection;
 
 use FOS\RestBundle\Controller\Annotations;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 
@@ -24,7 +23,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @package AppBundle\Controller
  * @author Gordon Franke <info@nevalon.de>
  */
-class NoteController extends FOSRestController
+class NoteController extends BaseController
 {
     /**
      * return \AppBundle\NoteManager

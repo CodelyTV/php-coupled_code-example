@@ -2,10 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 
-final class CourseController extends FOSRestController
+final class CourseController extends BaseController
 {
     public function getCourseAction(Request $request)
     {
@@ -21,14 +20,23 @@ final class CourseController extends FOSRestController
 
     public function getCourseVideosAction($courseId)
     {
-        return $this->getDoctrine()
-            ->getEntityManager()
-            ->createQueryBuilder()
-            ->select('c', 'v')
-            ->from('AppBundle\Model\Course', 'c')
-            ->leftJoin('a.Video', 'v')
-            ->where('c.id', '=', $courseId)
-            ->getQuery()
-            ->execute();
+        if ($this->hasCache('course-db-' . $courseId)) {
+            return $this->getCache('course-db-' . $courseId);
+        } else {
+            $this->setCache(
+                'course-db-' . $courseId,
+                $this->getDoctrine()
+                    ->getEntityManager()
+                    ->createQueryBuilder()
+                    ->select('c', 'v')
+                    ->from('AppBundle\Model\Course', 'c')
+                    ->leftJoin('a.Video', 'v')
+                    ->where('c.id', '=', $courseId)
+                    ->getQuery()
+                    ->execute()
+            );
+        }
+
+        return $this->getCache('course-db-' . $courseId);
     }
 }
